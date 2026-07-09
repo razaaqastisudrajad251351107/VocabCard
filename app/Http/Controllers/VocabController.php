@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vocab;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class VocabController extends Controller
 {
@@ -47,9 +48,15 @@ class VocabController extends Controller
     }
 
     public function destroy(Vocab $vocab)
-    {
+{
+    try {
         $vocab->delete();
 
-        return redirect()->route('vocabs.index');
+        return redirect()->route('vocabs.index')
+            ->with('success', 'Kosakata berhasil dihapus.');
+    } catch (QueryException $e) {
+        return redirect()->route('vocabs.index')
+            ->with('error', 'Kosakata tidak dapat dihapus karena masih berada di daftar Favorit. Hapus dari menu Favorit terlebih dahulu.');
     }
+}
 }
