@@ -58,14 +58,15 @@
                 Tambah Vocabulary
             </a>
 
+            <!-- Pesan Notifikasi -->
             @if(session('success'))
-                <div class="alert alert-success">
+                <div class="bg-green-600 text-white px-4 py-3 rounded mb-4">
                     {{ session('success') }}
                 </div>
             @endif
 
             @if(session('error'))
-                <div class="alert alert-danger">
+                <div class="bg-red-600 text-white px-4 py-3 rounded mb-4">
                     {{ session('error') }}
                 </div>
             @endif

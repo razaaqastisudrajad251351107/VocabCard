@@ -56,11 +56,18 @@ class CategoryController extends Controller
                          ->with('success', 'Kategori berhasil diupdate');
     }
 
-    public function destroy(Category $category)
+   public function destroy(Category $category)
     {
+        if ($category->vocabs()->count() > 0) {
+            return redirect()
+                ->route('categories.index')
+                ->with('error', 'Kategori masih digunakan oleh Vocabulary, Sentence, dan Favorite sehingga tidak dapat dihapus.');
+        }
+
         $category->delete();
 
-        return redirect()->route('categories.index')
-                         ->with('success', 'Kategori berhasil dihapus');
+        return redirect()
+            ->route('categories.index')
+            ->with('success', 'Kategori berhasil dihapus.');
     }
 }

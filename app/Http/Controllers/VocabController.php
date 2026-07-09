@@ -56,7 +56,7 @@ class VocabController extends Controller
             ->with('success', 'Kosakata berhasil dihapus.');
     } catch (QueryException $e) {
         return redirect()->route('vocabs.index')
-            ->with('error', 'Kosakata tidak dapat dihapus karena masih berada di daftar Favorit. Hapus dari menu Favorit terlebih dahulu.');
+            ->with('error', 'Kosakata tidak dapat dihapus karena masih berada di daftar Sentence atau Favorit. Hapus dari menu Sentence/Favorit terlebih dahulu.');
     }
 }
 }

@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('sentences', function (Blueprint $table) {
             $table->id();
+
+            // Relasi ke tabel vocabs
+            $table->foreignId('vocab_id')
+                  ->constrained('vocabs')
+                  ->onDelete('cascade');
+
+            // Kalimat bahasa Inggris
+            $table->text('english');
+
+            // Arti bahasa Indonesia
+            $table->text('indonesia');
+
             $table->timestamps();
         });
     }
