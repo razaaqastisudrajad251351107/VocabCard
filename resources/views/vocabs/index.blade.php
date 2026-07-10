@@ -1,118 +1,221 @@
 <x-app-layout>
 
-    <div class="py-2">
+    <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             <!-- Header -->
-            <header class="flex items-center gap-4 mb-4">
+            <header class="flex items-center gap-4 mb-6">
+
+                <!-- Menu Hamburger -->
                 <div x-data="{ open: false }" class="relative">
 
-                    <!-- Tombol Hamburger -->
                     <button @click="open = !open"
-                            class="p-2 text-white hover:bg-gray-700 rounded-lg transition">
+                        class="p-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
+
                         <svg class="w-6 h-6"
-                             fill="none"
-                             stroke="currentColor"
-                             viewBox="0 0 24 24">
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24">
+
                             <path stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2"
-                                  d="M4 6h16M4 12h16m-7 6h7"/>
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M4 6h16M4 12h16m-7 6h7"/>
+
                         </svg>
+
                     </button>
 
-                    <!-- Dropdown Menu -->
-                    <div x-show="open"
-                         @click.away="open = false"
-                         x-transition
-                         class="absolute left-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl z-50">
+                    <!-- Dropdown -->
+                    <div
+                        x-show="open"
+                        x-transition
+                        @click.away="open = false"
+                        class="absolute left-0 mt-2 w-56 bg-gray-800 rounded-xl shadow-xl border border-gray-700 z-50">
 
-                        <nav class="p-2 space-y-1">
+                        <nav class="p-2 space-y-2">
+
                             @foreach([
-                                ['name' => 'Kategori', 'route' => 'categories.index', 'icon' => '📁'],
-                                ['name' => 'Vocabulary', 'route' => 'vocabs.index', 'icon' => '📖'],
-                                ['name' => 'Sentence', 'route' => 'sentences.index', 'icon' => '✍️'],
-                                ['name' => 'Favorite', 'route' => 'favorites.index', 'icon' => '⭐'],
-                                ['name' => 'History', 'route' => 'histories.index', 'icon' => '🕒']
+                                ['name'=>'Kategori','route'=>'categories.index','icon'=>'📁'],
+                                ['name'=>'Vocabulary','route'=>'vocabs.index','icon'=>'📖'],
+                                ['name'=>'Sentence','route'=>'sentences.index','icon'=>'✍️'],
+                                ['name'=>'Flashcard','route'=>'flashcard.index','icon'=>'🎮'],
+                                ['name'=>'Favorite','route'=>'favorites.index','icon'=>'⭐'],
+                                ['name'=>'History','route'=>'histories.index','icon'=>'🕒'],
                             ] as $menu)
 
                                 <a href="{{ route($menu['route']) }}"
-                                   class="flex items-center px-4 py-2 text-white hover:bg-gray-700 rounded-md">
-                                    <span class="mr-3">{{ $menu['icon'] }}</span>
-                                    {{ $menu['name'] }}
+                                   class="flex items-center gap-3 px-4 py-3 rounded-lg text-white hover:bg-blue-600 transition">
+
+                                    <span class="text-2xl">
+                                        {{ $menu['icon'] }}
+                                    </span>
+
+                                    <span class="font-semibold">
+                                        {{ $menu['name'] }}
+                                    </span>
+
                                 </a>
 
                             @endforeach
+
                         </nav>
+
                     </div>
+
                 </div>
 
                 <h2 class="text-3xl font-bold text-white">
-                    Daftar Vocabulary
+                    📖 Daftar Vocabulary
                 </h2>
+
             </header>
 
             <!-- Tombol Tambah -->
-            <a href="{{ route('vocabs.create') }}"
-               class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded mb-4">
-                Tambah Vocabulary
-            </a>
+            <div class="mb-5">
 
-            <!-- Pesan Notifikasi -->
+                <a href="{{ route('vocabs.create') }}"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow">
+
+                    + Tambah Vocabulary
+
+                </a>
+
+            </div>
+
+            <!-- Notifikasi -->
             @if(session('success'))
-                <div class="bg-green-600 text-white px-4 py-3 rounded mb-4">
+
+                <div class="bg-green-600 text-white px-4 py-3 rounded-lg mb-4">
+
                     {{ session('success') }}
+
                 </div>
+
             @endif
 
             @if(session('error'))
-                <div class="bg-red-600 text-white px-4 py-3 rounded mb-4">
+
+                <div class="bg-red-600 text-white px-4 py-3 rounded-lg mb-4">
+
                     {{ session('error') }}
+
                 </div>
+
             @endif
 
-            <!-- Table (tidak diubah) -->
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <table class="w-full border-collapse border border-gray-300 dark:border-gray-700">
-                        <thead>
-                            <tr class="bg-gray-100 dark:bg-gray-700">
-                                <th class="border border-gray-300 dark:border-gray-600 p-2 text-left w-16">No</th>
-                                <th class="border border-gray-300 dark:border-gray-600 p-2 text-left">Word</th>
-                                <th class="border border-gray-300 dark:border-gray-600 p-2 text-left">Meaning</th>
-                                <th class="border border-gray-300 dark:border-gray-600 p-2 text-left">Category</th>
-                                <th class="border border-gray-300 dark:border-gray-600 p-2 text-center w-48">Aksi</th>
-                            </tr>
-                        </thead>
+            <!-- Table -->
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden">
 
-                        <tbody>
-                            @foreach($vocabs as $vocab)
-                            <tr>
-                                <td class="border border-gray-300 dark:border-gray-600 p-2">{{ $loop->iteration }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 p-2">{{ $vocab->word }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 p-2">{{ $vocab->meaning }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 p-2">{{ $vocab->category->nama_kategori ?? '-' }}</td>
-                                <td class="border border-gray-300 dark:border-gray-600 p-2 text-center space-x-2">
-                                    <a href="{{ route('vocabs.edit', $vocab->id) }}" class="text-yellow-500 hover:underline">
+                <table class="w-full text-white">
+
+                    <thead class="bg-gray-700">
+
+                        <tr>
+
+                            <th class="p-3 text-left w-20">
+                                No
+                            </th>
+
+                            <th class="p-3 text-left">
+                                Word
+                            </th>
+
+                            <th class="p-3 text-left">
+                                Meaning
+                            </th>
+
+                            <th class="p-3 text-left">
+                                Category
+                            </th>
+
+                            <th class="p-3 text-center w-48">
+                                Aksi
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @forelse($vocabs as $vocab)
+
+                            <tr class="border-b border-gray-700 hover:bg-gray-700 transition">
+
+                                <td class="p-3">
+
+                                    {{ $loop->iteration }}
+
+                                </td>
+
+                                <td class="p-3">
+
+                                    {{ $vocab->word }}
+
+                                </td>
+
+                                <td class="p-3">
+
+                                    {{ $vocab->meaning }}
+
+                                </td>
+
+                                <td class="p-3">
+
+                                    {{ $vocab->category->nama_kategori ?? '-' }}
+
+                                </td>
+
+                                <td class="p-3 text-center">
+
+                                    <a href="{{ route('vocabs.edit',$vocab->id) }}"
+                                       class="text-yellow-400 hover:text-yellow-300 mr-4">
+
                                         Edit
+
                                     </a>
 
-                                    <form action="{{ route('vocabs.destroy', $vocab->id) }}" method="POST" class="inline-block">
+                                    <form action="{{ route('vocabs.destroy',$vocab->id) }}"
+                                          method="POST"
+                                          class="inline">
+
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"
-                                                class="text-red-500 hover:underline"
-                                                onclick="return confirm('Yakin ingin menghapus?')">
-                                            Hapus
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
 
-                    </table>
-                </div>
+                                        <button
+                                            onclick="return confirm('Yakin ingin menghapus data ini?')"
+                                            class="text-red-400 hover:text-red-300">
+
+                                            Hapus
+
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+                        @empty
+
+                            <tr>
+
+                                <td colspan="5"
+                                    class="text-center p-6 text-gray-400">
+
+                                    Belum ada data vocabulary.
+
+                                </td>
+
+                            </tr>
+
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
             </div>
 
         </div>

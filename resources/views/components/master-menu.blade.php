@@ -1,39 +1,76 @@
 <div x-data="{ open: false }" class="relative mb-6">
 
+    <!-- Header -->
     <div class="flex items-center gap-4">
 
-        <button @click="open = !open"
-                class="p-2 text-white hover:bg-gray-700 rounded-lg">
-            <svg class="w-6 h-6"
+        <!-- Tombol Hamburger -->
+        <button
+            @click="open = !open"
+            class="flex items-center justify-center w-11 h-11 bg-gray-800 hover:bg-indigo-600 text-white rounded-xl transition duration-300 shadow-lg">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-6 h-6"
                  fill="none"
-                 stroke="currentColor"
-                 viewBox="0 0 24 24">
+                 viewBox="0 0 24 24"
+                 stroke="currentColor">
+
                 <path stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width="2"
-                      d="M4 6h16M4 12h16m-7 6h7"/>
+                      d="M4 6h16M4 12h16M4 18h16"/>
+
             </svg>
+
         </button>
 
-        <h2 class="text-3xl font-bold text-white">
+        <h2 class="text-4xl font-bold text-white">
             {{ $slot }}
         </h2>
 
     </div>
 
-    <div x-show="open"
-         @click.away="open = false"
-         class="absolute left-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-50">
+    <!-- Dropdown Menu -->
+    <div
+        x-show="open"
+        x-transition
+        @click.away="open = false"
+        class="absolute left-0 mt-4 w-64 bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl overflow-hidden z-50">
 
-        <a href="{{ route('categories.index') }}" class="block px-4 py-2 text-white hover:bg-gray-700">📁 Kategori</a>
+        <a href="{{ route('categories.index') }}"
+           class="flex items-center gap-3 px-5 py-4 text-white hover:bg-indigo-600 transition duration-300">
+            📁
+            <span>Kategori</span>
+        </a>
 
-        <a href="{{ route('vocabs.index') }}" class="block px-4 py-2 text-white hover:bg-gray-700">📖 Vocabulary</a>
+        <a href="{{ route('vocabs.index') }}"
+           class="flex items-center gap-3 px-5 py-4 text-white hover:bg-indigo-600 transition duration-300">
+            📖
+            <span>Vocabulary</span>
+        </a>
 
-        <a href="{{ route('sentences.index') }}" class="block px-4 py-2 text-white hover:bg-gray-700">✍️ Sentence</a>
+        <a href="{{ route('sentences.index') }}"
+           class="flex items-center gap-3 px-5 py-4 text-white hover:bg-indigo-600 transition duration-300">
+            ✍️
+            <span>Sentence</span>
+        </a>
 
-        <a href="{{ route('favorites.index') }}" class="block px-4 py-2 text-white hover:bg-gray-700">⭐ Favorite</a>
+        <a href="{{ route('flashcard.index') }}"
+           class="flex items-center gap-3 px-5 py-4 text-white hover:bg-indigo-600 transition duration-300">
+            🎮
+            <span>Flashcard Game</span>
+        </a>
 
-        <a href="{{ route('histories.index') }}" class="block px-4 py-2 text-white hover:bg-gray-700">🕒 History</a>
+        <a href="{{ route('favorites.index') }}"
+           class="flex items-center gap-3 px-5 py-4 text-white hover:bg-indigo-600 transition duration-300">
+            ⭐
+            <span>Favorite</span>
+        </a>
+
+        <a href="{{ route('histories.index') }}"
+           class="flex items-center gap-3 px-5 py-4 text-white hover:bg-indigo-600 transition duration-300">
+            🕒
+            <span>History</span>
+        </a>
 
     </div>
 

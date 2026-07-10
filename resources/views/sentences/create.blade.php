@@ -1,63 +1,173 @@
 <x-app-layout>
+
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">
-            Tambah Sentence
+        <h2 class="font-semibold text-xl text-white leading-tight">
+            Generate Sentence AI
         </h2>
     </x-slot>
 
+    <style>
+        /* Warna teks dropdown */
+        #vocab_id {
+            color: white;
+        }
+
+        #vocab_id option {
+            color: white;
+            background-color: #374151;
+        }
+
+        /* Warna teks textarea */
+        #english,
+        #indonesia {
+            color: white;
+        }
+
+        #english::placeholder,
+        #indonesia::placeholder {
+            color: white;
+        }
+    </style>
+
     <div class="py-12">
-        <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
-            
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-md sm:rounded-lg border border-gray-300 dark:border-gray-700">
-                
-                <div class="px-6 py-5 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 text-center">
-                    <h3 class="text-lg leading-6 font-bold text-gray-900 dark:text-gray-100">
-                        Form Tambah Sentence
-                    </h3>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                        Silakan buat kalimat menggunakan vocabulary yang ada.
-                    </p>
-                </div>
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
 
                 <div class="p-6">
-                    <form action="{{ route('sentences.store') }}" method="POST">
+
+                    <h2 class="text-2xl font-bold text-white">
+                        Form Generate Sentence
+                    </h2>
+
+                    <p class="text-sm text-white mb-6">
+                        Pilih vocabulary kemudian generate kalimat menggunakan AI.
+                    </p>
+
+                    <hr class="mb-6">
+
+                    <form method="POST" action="{{ route('sentences.store') }}">
                         @csrf
 
                         <div class="mb-4">
-                            <label for="vocab_id" class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">Vocabulary</label>
-                            <select name="vocab_id" id="vocab_id" required class="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm">
-                                <option value="" disabled selected>-- Pilih Vocabulary --</option>
+                            <label for="vocab_id" class="block text-sm font-medium text-white mb-2">
+                                Vocabulary
+                            </label>
+
+                            <select
+                                id="vocab_id"
+                                name="vocab_id"
+                                class="w-full rounded-md border-gray-300 dark:bg-gray-700 dark:text-white">
+
+                                <option value="" selected>
+                                    -- Pilih Vocabulary --
+                                </option>
+
                                 @foreach($vocabs as $vocab)
                                     <option value="{{ $vocab->id }}">
                                         {{ $vocab->word }}
                                     </option>
                                 @endforeach
+
                             </select>
                         </div>
 
+                        <div class="mb-5">
+                            <button
+                                type="button"
+                                id="generate-ai"
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                                Generate Sentence AI
+                            </button>
+                        </div>
+
                         <div class="mb-4">
-                            <label for="english" class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">English Sentence</label>
-                            <textarea name="english" id="english" rows="4" required placeholder="Contoh: I run every morning in the park." class="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm"></textarea>
+                            <label class="block text-sm font-medium text-white mb-2">
+                                English Sentence
+                            </label>
+
+                            <textarea
+                                id="english"
+                                name="english"
+                                rows="4"
+                                class="w-full rounded-md border-gray-300 dark:bg-gray-700 dark:text-white"></textarea>
                         </div>
 
                         <div class="mb-6">
-                            <label for="indonesia" class="block font-medium text-sm text-gray-700 dark:text-gray-300 mb-2">Arti Indonesia</label>
-                            <textarea name="indonesia" id="indonesia" rows="4" required placeholder="Contoh: Saya lari setiap pagi di taman." class="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm"></textarea>
+                            <label class="block text-sm font-medium text-white mb-2">
+                                Indonesia Translation
+                            </label>
+
+                            <textarea
+                                id="indonesia"
+                                name="indonesia"
+                                rows="4"
+                                class="w-full rounded-md border-gray-300 dark:bg-gray-700 dark:text-white"></textarea>
                         </div>
 
-                        <div class="flex items-center gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-md transition duration-150 ease-in-out shadow-sm">
+                        <div class="flex items-center gap-3">
+
+                            <button
+                                type="submit"
+                                class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
                                 Simpan
                             </button>
-                            
-                            <a href="{{ route('sentences.index') }}" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 underline transition duration-150 ease-in-out">
+
+                            <a href="{{ route('sentences.index') }}"
+                               class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded">
                                 Kembali
                             </a>
+
                         </div>
+
                     </form>
+
                 </div>
 
             </div>
+
         </div>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const button = document.getElementById('generate-ai');
+
+        button.addEventListener('click', async function () {
+
+            const select = document.getElementById('vocab_id');
+
+            if (select.value === "") {
+                alert("Pilih vocabulary terlebih dahulu.");
+                return;
+            }
+
+            const word = select.options[select.selectedIndex].text;
+
+            try {
+
+                const response = await fetch('/generate-sentence/' + encodeURIComponent(word));
+
+                if (!response.ok) {
+                    throw new Error("Gagal mengambil data AI");
+                }
+
+                const data = await response.json();
+
+                document.getElementById('english').value = data.english ?? '';
+                document.getElementById('indonesia').value = data.indonesia ?? '';
+
+            } catch (error) {
+
+                console.error(error);
+                alert("Terjadi kesalahan saat generate sentence.");
+
+            }
+
+        });
+
+    });
+    </script>
+
 </x-app-layout>
