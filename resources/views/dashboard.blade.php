@@ -12,7 +12,7 @@
             <!-- Welcome -->
             <div class="bg-gradient-to-r from-blue-700 to-indigo-800 rounded-xl shadow-lg p-8 mb-8">
                 <h1 class="text-3xl font-bold text-white">
-                    Selamat Datang 👋
+                    Selamat Datang Kelompok 3
                 </h1>
 
                 <p class="text-gray-200 mt-2">
